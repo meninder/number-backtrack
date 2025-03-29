@@ -49,6 +49,16 @@ export const getInverseOperation = (operation: Operation): Operation => {
   }
 };
 
+// Interface for difficulty configurations
+interface DifficultyConfig {
+  startRange: number[];
+  steps: number;
+  operations: Operation[];
+  operandRange: number[];
+  multiplierRange?: number[];
+  divisorRange?: number[];
+}
+
 // Generate decoy operations that are incorrect but plausible
 const generateDecoyOperations = (
   correctOperations: Step[], 
@@ -109,7 +119,7 @@ const generateDecoyOperations = (
 };
 
 // Get configuration based on difficulty
-const getDifficultyConfig = (difficulty: Difficulty) => {
+const getDifficultyConfig = (difficulty: Difficulty): DifficultyConfig => {
   const config = {
     easy: {
       startRange: [1, 20],
