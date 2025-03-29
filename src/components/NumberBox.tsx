@@ -61,6 +61,12 @@ const NumberBox: React.FC<NumberBoxProps> = ({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && onBlur) {
+      onBlur();
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -79,6 +85,7 @@ const NumberBox: React.FC<NumberBoxProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
           className="w-16 h-12 text-center text-3xl font-bold bg-transparent border-none focus:ring-0 focus:outline-primary"
         />
       ) : (
