@@ -8,7 +8,7 @@ interface DropZoneProps {
   isActive: boolean;
   currentOperation: { operation: string; value: number } | null;
   isHighlighted: boolean;
-  onDrop: (stepIndex: number, data: { operation: string; value: number }) => void;
+  onDrop: (stepIndex: number, data: { operation: string; value: number }, tileKey: string) => void;
 }
 
 const DropZone: React.FC<DropZoneProps> = ({
@@ -69,7 +69,7 @@ const DropZone: React.FC<DropZoneProps> = ({
 
     try {
       const data = JSON.parse(e.dataTransfer.getData('text/plain'));
-      onDrop(stepIndex, data);
+      onDrop(stepIndex, data, data.tileKey);
     } catch (error) {
       console.error('Error processing drop:', error);
     }

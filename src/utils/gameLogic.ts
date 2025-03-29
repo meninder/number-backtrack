@@ -14,6 +14,7 @@ export interface GameState {
   result: number;
   intermediateResults: number[];
   inverseOperations: Step[];
+  decoyOperations: Step[]; // Added decoy operations
 }
 
 // Utility functions for operations
@@ -48,9 +49,67 @@ export const getInverseOperation = (operation: Operation): Operation => {
   }
 };
 
-// Generate a new game based on difficulty
-export const generateGame = (difficulty: Difficulty): GameState => {
-  // Define ranges based on difficulty
+// Generate decoy operations that are incorrect but plausible
+const generateDecoyOperations = (
+  correctOperations: Step[], 
+  difficulty: Difficulty, 
+  count: number
+): Step[] => {
+  const decoys: Step[] = [];
+  const config = getDifficultyConfig(difficulty);
+  
+  // Generate decoy operations
+  for (let i = 0; i < count; i++) {
+    const operationTypes: Operation[] = ['add', 'subtract', 'multiply', 'divide'];
+    // Filter operations based on difficulty
+    const allowedOperations = operationTypes.filter(op => {
+      if (difficulty === 'easy') return op === 'add' || op === 'subtract';
+      if (difficulty === 'medium') return op !== 'divide' || Math.random() < 0.3;
+      return true;
+    });
+    
+    // Pick a random operation type
+    const operation = allowedOperations[Math.floor(Math.random() * allowedOperations.length)];
+    
+    // Generate a value based on operation type
+    let value: number;
+    switch (operation) {
+      case 'add':
+      case 'subtract':
+        value = Math.floor(Math.random() * (config.operandRange[1] - config.operandRange[0] + 1)) + config.operandRange[0];
+        break;
+      case 'multiply':
+        value = Math.floor(Math.random() * 
+          ((config.multiplierRange?.[1] || 5) - (config.multiplierRange?.[0] || 2) + 1)) + 
+          (config.multiplierRange?.[0] || 2);
+        break;
+      case 'divide':
+        value = Math.floor(Math.random() * 
+          ((config.divisorRange?.[1] || 5) - (config.divisorRange?.[0] || 2) + 1)) + 
+          (config.divisorRange?.[0] || 2);
+        break;
+      default:
+        value = 1;
+    }
+    
+    // Make sure the decoy is not identical to any correct operation
+    const isDuplicate = correctOperations.some(
+      op => op.operation === operation && op.value === value
+    );
+    
+    if (isDuplicate) {
+      i--; // Try again
+      continue;
+    }
+    
+    decoys.push({ operation, value });
+  }
+  
+  return decoys;
+};
+
+// Get configuration based on difficulty
+const getDifficultyConfig = (difficulty: Difficulty) => {
   const config = {
     easy: {
       startRange: [1, 20],
@@ -74,8 +133,15 @@ export const generateGame = (difficulty: Difficulty): GameState => {
       divisorRange: [2, 5],
     },
   };
+  
+  return config[difficulty];
+};
 
-  const { startRange, steps, operations, operandRange, multiplierRange, divisorRange } = config[difficulty];
+// Generate a new game based on difficulty
+export const generateGame = (difficulty: Difficulty): GameState => {
+  const config = getDifficultyConfig(difficulty);
+
+  const { startRange, steps, operations, operandRange } = config;
 
   // Generate random starting number
   let startNumber = Math.floor(Math.random() * (startRange[1] - startRange[0] + 1)) + startRange[0];
@@ -99,11 +165,15 @@ export const generateGame = (difficulty: Difficulty): GameState => {
         value = Math.floor(Math.random() * (operandRange[1] - operandRange[0] + 1)) + operandRange[0];
         break;
       case 'multiply':
-        value = Math.floor(Math.random() * (multiplierRange![1] - multiplierRange![0] + 1)) + multiplierRange![0];
+        value = Math.floor(Math.random() * 
+          ((config.multiplierRange?.[1] || 5) - (config.multiplierRange?.[0] || 2) + 1)) + 
+          (config.multiplierRange?.[0] || 2);
         break;
       case 'divide':
         // For division, ensure we get a whole number result
-        const divisor = Math.floor(Math.random() * (divisorRange![1] - divisorRange![0] + 1)) + divisorRange![0];
+        const divisor = Math.floor(Math.random() * 
+          ((config.divisorRange?.[1] || 5) - (config.divisorRange?.[0] || 2) + 1)) + 
+          (config.divisorRange?.[0] || 2);
         // Adjust currentNumber to be divisible by divisor
         currentNumber = currentNumber - (currentNumber % divisor);
         // Ensure currentNumber is at least divisor to avoid division by zero
@@ -142,6 +212,11 @@ export const generateGame = (difficulty: Difficulty): GameState => {
     operation: getInverseOperation(step.operation),
     value: step.value
   }));
+  
+  // Generate decoy operations (incorrect but plausible options)
+  // Add more decoys for higher difficulty levels
+  const decoyCount = difficulty === 'easy' ? 2 : difficulty === 'medium' ? 3 : 4;
+  const decoyOperations = generateDecoyOperations(inverseOperations, difficulty, decoyCount);
 
   return {
     startNumber,
@@ -149,6 +224,7 @@ export const generateGame = (difficulty: Difficulty): GameState => {
     result,
     intermediateResults,
     inverseOperations,
+    decoyOperations,
   };
 };
 

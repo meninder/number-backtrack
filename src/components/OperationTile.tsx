@@ -5,16 +5,20 @@ import { cn } from "@/lib/utils";
 interface OperationTileProps {
   operation: string;
   value: number;
+  tileKey: string;
   isUsed: boolean;
   isCorrect: boolean | null;
+  isHighlighted?: boolean;
   onDragStart: (operation: string, value: number) => void;
 }
 
 const OperationTile: React.FC<OperationTileProps> = ({
   operation,
   value,
+  tileKey,
   isUsed,
   isCorrect,
+  isHighlighted = false,
   onDragStart,
 }) => {
   const tileRef = useRef<HTMLDivElement>(null);
@@ -71,7 +75,7 @@ const OperationTile: React.FC<OperationTileProps> = ({
     if (isUsed) return;
     
     if (e.dataTransfer && tileRef.current) {
-      e.dataTransfer.setData('text/plain', JSON.stringify({ operation, value }));
+      e.dataTransfer.setData('text/plain', JSON.stringify({ operation, value, tileKey }));
       e.dataTransfer.effectAllowed = 'move';
       
       // Create a semi-transparent drag image
@@ -107,6 +111,7 @@ const OperationTile: React.FC<OperationTileProps> = ({
         isCorrect === false && !animating && 'ring-2 ring-red-500',
         animating && isCorrect === true && 'correct-animation',
         animating && isCorrect === false && 'incorrect-animation',
+        isHighlighted && 'ring-2 ring-yellow-400 pulse-highlight'
       )}
     >
       <span className="text-2xl font-bold">{symbol} {value}</span>
