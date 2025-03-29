@@ -2,7 +2,6 @@
 import React from 'react';
 import NumberBox from './NumberBox';
 import { GameState } from '@/utils/gameLogic';
-import { ArrowRight } from 'lucide-react';
 
 interface GamePathProps {
   game: GameState;
@@ -61,10 +60,8 @@ const GamePath: React.FC<GamePathProps> = ({
               onBlur={() => validateUserCalculation(index)}
             />
             
-            {/* Arrow indicating forward direction */}
-            <div className="flex flex-col items-center justify-center w-24">
-              <ArrowRight size={28} className="text-primary" />
-            </div>
+            {/* Empty space to align with operations */}
+            <div className="w-24 opacity-0"></div>
           </React.Fragment>
         ))}
         

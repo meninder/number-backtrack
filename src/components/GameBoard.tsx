@@ -7,7 +7,6 @@ import CelebrationEffect from './CelebrationEffect';
 import { useGameLogic } from '@/hooks/useGameLogic';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { type Difficulty } from '@/utils/gameLogic';
-import DropZone from './DropZone';
 
 interface GameBoardProps {
   difficulty: Difficulty;
@@ -49,7 +48,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   return (
     <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
       <div className="w-full mb-8">
-        {/* Forward calculation path (top row) */}
+        {/* Game calculation path with centered number boxes */}
         <GamePath 
           game={game} 
           intermediateValues={intermediateValues}
@@ -59,7 +58,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           validateUserCalculation={validateUserCalculation}
         />
         
-        {/* Arrow indicators */}
+        {/* Reverse calculation path with drop zones */}
         <ReverseOperationsArea 
           game={game}
           activeDropZone={activeDropZone}
@@ -67,35 +66,6 @@ const GameBoard: React.FC<GameBoardProps> = ({
           currentDragTile={currentDragTile}
           onDrop={handleDrop}
         />
-        
-        {/* Drop zones (bottom row) */}
-        <div className="flex justify-center items-center gap-4">
-          {game.steps.map((step, index) => (
-            <React.Fragment key={`drop-${index}`}>
-              {/* Empty space to align with number boxes */}
-              <div className="w-24 opacity-0"></div>
-              
-              {/* Drop zone for the reverse operation (aligned with the operation display above) */}
-              <DropZone 
-                stepIndex={index}
-                isActive={activeDropZone === index}
-                currentOperation={
-                  completedSteps.includes(index) 
-                    ? { 
-                        operation: game.inverseOperations[index].operation, 
-                        value: game.inverseOperations[index].value 
-                      }
-                    : null
-                }
-                isHighlighted={activeDropZone === index && currentDragTile !== null}
-                onDrop={handleDrop}
-              />
-            </React.Fragment>
-          ))}
-          
-          {/* Empty space to align with final result box */}
-          <div className="w-24 opacity-0"></div>
-        </div>
       </div>
       
       {/* Available operation tiles */}

@@ -2,7 +2,6 @@
 import React from 'react';
 import DropZone from './DropZone';
 import { GameState } from '@/utils/gameLogic';
-import { ArrowUp } from 'lucide-react';
 
 interface ReverseOperationsAreaProps {
   game: GameState;
@@ -26,10 +25,21 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
           {/* Empty space to align with number boxes */}
           <div className="w-24 opacity-0"></div>
           
-          {/* Arrow indicating backward/upward flow */}
-          <div className="flex flex-col items-center justify-center w-24 h-14">
-            <ArrowUp size={28} className="text-primary" />
-          </div>
+          {/* Drop zone for the reverse operation (aligned with the operation display above) */}
+          <DropZone 
+            stepIndex={index}
+            isActive={activeDropZone === index}
+            currentOperation={
+              completedSteps.includes(index) 
+                ? { 
+                    operation: game.inverseOperations[index].operation, 
+                    value: game.inverseOperations[index].value 
+                  }
+                : null
+            }
+            isHighlighted={activeDropZone === index && currentDragTile !== null}
+            onDrop={onDrop}
+          />
         </React.Fragment>
       ))}
       
