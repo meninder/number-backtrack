@@ -24,7 +24,7 @@ const GamePath: React.FC<GamePathProps> = ({
   return (
     <div className="flex flex-col w-full max-w-3xl mx-auto mb-2">
       {/* Top row with number boxes and forward arrows */}
-      <div className="flex flex-wrap justify-center items-center gap-3 mb-2">
+      <div className="flex flex-wrap justify-center items-center gap-3 mb-4">
         {intermediateValues.map((value, index) => (
           <React.Fragment key={index}>
             <NumberBox 
@@ -41,7 +41,26 @@ const GamePath: React.FC<GamePathProps> = ({
               <OperationArrow 
                 operation={game.steps[index].operation}
                 value={game.steps[index].value}
+                direction="right"
               />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      
+      {/* Vertical connecting arrows */}
+      <div className="flex justify-center mb-2">
+        {intermediateValues.map((_, index) => (
+          <React.Fragment key={`connector-${index}`}>
+            <div className="flex-1 flex justify-center">
+              <OperationArrow
+                operation=""
+                value={0}
+                direction="down"
+              />
+            </div>
+            {index < intermediateValues.length - 1 && (
+              <div className="w-[78px]"></div> // Space for the horizontal arrows
             )}
           </React.Fragment>
         ))}

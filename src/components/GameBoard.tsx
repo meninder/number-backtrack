@@ -47,7 +47,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
-      <div className="w-full">
+      <div className="w-full mb-8">
         {/* Game path visualization (forward pass) */}
         <GamePath 
           game={game} 

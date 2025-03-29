@@ -21,38 +21,34 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
 }) => {
   return (
     <div className="flex flex-wrap justify-center items-center gap-3 mb-8">
-      {game.steps.map((_, index) => {
-        // Calculate position to align with number boxes
-        const boxIndex = index;
-        
-        return (
-          <div key={`reverse-${index}`} className="flex flex-col items-center">
-            {/* Upward arrow indicating the backward operation */}
-            <div className="mb-1">
-              <OperationArrow 
-                operation="backwards" 
-                value={0} 
-              />
-            </div>
-            
-            {/* Drop zone for the backward operation */}
-            <DropZone 
-              stepIndex={index}
-              isActive={activeDropZone === index}
-              currentOperation={
-                completedSteps.includes(index) 
-                  ? { 
-                      operation: game.inverseOperations[index].operation, 
-                      value: game.inverseOperations[index].value 
-                    }
-                  : null
-              }
-              isHighlighted={activeDropZone === index && currentDragTile !== null}
-              onDrop={onDrop}
+      {game.steps.map((_, index) => (
+        <React.Fragment key={`reverse-${index}`}>
+          {/* Drop zone for the backward operation */}
+          <DropZone 
+            stepIndex={index}
+            isActive={activeDropZone === index}
+            currentOperation={
+              completedSteps.includes(index) 
+                ? { 
+                    operation: game.inverseOperations[index].operation, 
+                    value: game.inverseOperations[index].value 
+                  }
+                : null
+            }
+            isHighlighted={activeDropZone === index && currentDragTile !== null}
+            onDrop={onDrop}
+          />
+          
+          {/* Arrow pointing up */}
+          {index < game.steps.length - 1 && (
+            <OperationArrow 
+              operation=""
+              value={0}
+              direction="up"
             />
-          </div>
-        );
-      })}
+          )}
+        </React.Fragment>
+      ))}
     </div>
   );
 };
