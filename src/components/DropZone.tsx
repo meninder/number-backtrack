@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface DropZoneProps {
@@ -78,11 +78,11 @@ const DropZone: React.FC<DropZoneProps> = ({
   return (
     <div
       className={cn(
-        "drop-zone flex items-center justify-center rounded-xl p-2 min-w-16 h-14 border-2 border-dashed",
+        "drop-zone flex items-center justify-center rounded-xl p-2 min-w-24 min-h-14 border-2 border-dashed",
         isActive 
           ? "border-primary/70 bg-primary/5" 
           : "border-gray-200 bg-gray-50",
-        (isDragOver || isHighlighted) && isActive && "active",
+        (isDragOver || isHighlighted) && isActive && "border-primary bg-primary/10",
         currentOperation && "border-solid bg-white"
       )}
       onDragOver={handleDragOver}
@@ -97,12 +97,9 @@ const DropZone: React.FC<DropZoneProps> = ({
         </div>
       ) : (
         <div className="flex items-center text-muted-foreground">
-          <ArrowLeft size={18} className="mr-1" />
-          {isActive ? (
-            <span className="text-sm">Drop here</span>
-          ) : (
-            <span className="text-xs">Wait...</span>
-          )}
+          <span className="text-sm">
+            {isActive ? "Drop here" : "Wait..."}
+          </span>
         </div>
       )}
     </div>

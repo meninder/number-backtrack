@@ -22,27 +22,30 @@ const GamePath: React.FC<GamePathProps> = ({
   validateUserCalculation,
 }) => {
   return (
-    <div className="flex flex-wrap justify-center items-center gap-3 mb-8">
-      {intermediateValues.map((value, index) => (
-        <React.Fragment key={index}>
-          <NumberBox 
-            value={value ?? '?'} 
-            isRevealed={value !== null}
-            isResult={index === intermediateValues.length - 1}
-            animate={index !== intermediateValues.length - 1}
-            editable={manualCalculation && value === '' && completedSteps.includes(index)}
-            onChange={(newValue) => handleUserInputChange(index, newValue)}
-            onBlur={() => validateUserCalculation(index)}
-          />
-          
-          {index < game.steps.length && (
-            <OperationArrow 
-              operation={game.steps[index].operation}
-              value={game.steps[index].value}
+    <div className="flex flex-col w-full max-w-3xl mx-auto mb-2">
+      {/* Top row with number boxes and forward arrows */}
+      <div className="flex flex-wrap justify-center items-center gap-3 mb-2">
+        {intermediateValues.map((value, index) => (
+          <React.Fragment key={index}>
+            <NumberBox 
+              value={value ?? '?'} 
+              isRevealed={value !== null}
+              isResult={index === intermediateValues.length - 1}
+              animate={index !== intermediateValues.length - 1}
+              editable={manualCalculation && value === '' && completedSteps.includes(index)}
+              onChange={(newValue) => handleUserInputChange(index, newValue)}
+              onBlur={() => validateUserCalculation(index)}
             />
-          )}
-        </React.Fragment>
-      ))}
+            
+            {index < game.steps.length && (
+              <OperationArrow 
+                operation={game.steps[index].operation}
+                value={game.steps[index].value}
+              />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };

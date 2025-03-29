@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowUp } from 'lucide-react';
 
 interface OperationArrowProps {
   operation: string;
@@ -38,7 +38,7 @@ const OperationArrow: React.FC<OperationArrowProps> = ({ operation, value }) => 
         {displayText}
       </div>
       {isBackwards ? (
-        <ArrowLeft size={28} className="text-primary" />
+        <ArrowUp size={28} className="text-primary" />
       ) : (
         <ArrowRight size={28} className="text-primary" />
       )}

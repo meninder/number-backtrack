@@ -47,24 +47,26 @@ const GameBoard: React.FC<GameBoardProps> = ({
 
   return (
     <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
-      {/* Game path visualization */}
-      <GamePath 
-        game={game} 
-        intermediateValues={intermediateValues}
-        completedSteps={completedSteps}
-        manualCalculation={manualCalculation}
-        handleUserInputChange={handleUserInputChange}
-        validateUserCalculation={validateUserCalculation}
-      />
-      
-      {/* Drop zones for inverse operations */}
-      <ReverseOperationsArea 
-        game={game}
-        activeDropZone={activeDropZone}
-        completedSteps={completedSteps}
-        currentDragTile={currentDragTile}
-        onDrop={handleDrop}
-      />
+      <div className="w-full">
+        {/* Game path visualization (forward pass) */}
+        <GamePath 
+          game={game} 
+          intermediateValues={intermediateValues}
+          completedSteps={completedSteps}
+          manualCalculation={manualCalculation}
+          handleUserInputChange={handleUserInputChange}
+          validateUserCalculation={validateUserCalculation}
+        />
+        
+        {/* Drop zones for inverse operations (backward pass) */}
+        <ReverseOperationsArea 
+          game={game}
+          activeDropZone={activeDropZone}
+          completedSteps={completedSteps}
+          currentDragTile={currentDragTile}
+          onDrop={handleDrop}
+        />
+      </div>
       
       {/* Available operation tiles */}
       <TilesArea 
