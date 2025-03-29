@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    outDir: "pages"
+    outDir: "docs"  // Changed from "pages" to "docs" for GitHub Pages
   },
   base: './'
 }));
