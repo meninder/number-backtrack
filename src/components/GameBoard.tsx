@@ -48,7 +48,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
   return (
     <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
       <div className="w-full mb-8">
-        {/* Forward calculation path (top row) */}
+        {/* Game calculation path with centered number boxes */}
         <GamePath 
           game={game} 
           intermediateValues={intermediateValues}
@@ -58,7 +58,7 @@ const GameBoard: React.FC<GameBoardProps> = ({
           validateUserCalculation={validateUserCalculation}
         />
         
-        {/* Reverse calculation path with drop zones (bottom row) */}
+        {/* Reverse calculation path with drop zones */}
         <ReverseOperationsArea 
           game={game}
           activeDropZone={activeDropZone}

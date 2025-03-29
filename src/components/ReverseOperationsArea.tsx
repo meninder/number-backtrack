@@ -19,11 +19,11 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
   onDrop 
 }) => {
   return (
-    <div className="flex justify-center items-center gap-4 mb-8">
+    <div className="flex justify-center items-center gap-4">
       {game.steps.map((step, index) => (
         <React.Fragment key={`reverse-${index}`}>
           {/* Empty space to align with number boxes */}
-          <div className="w-24 h-24 opacity-0"></div>
+          <div className="w-24 opacity-0"></div>
           
           {/* Drop zone for the reverse operation (aligned with the operation display above) */}
           <DropZone 
@@ -44,7 +44,7 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
       ))}
       
       {/* Empty space to align with final result box */}
-      <div className="w-24 h-24 opacity-0"></div>
+      <div className="w-24 opacity-0"></div>
     </div>
   );
 };
