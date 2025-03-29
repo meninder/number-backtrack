@@ -39,4 +39,3 @@ export const getDifficultyConfig = (difficulty: Difficulty): DifficultyConfig =>
   
   return config[difficulty];
 };
-

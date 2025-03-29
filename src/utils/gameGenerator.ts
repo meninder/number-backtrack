@@ -1,4 +1,3 @@
-
 import { GameState, Step, Difficulty, Operation } from './types';
 import { performOperation, getInverseOperation } from './operations';
 import { getDifficultyConfig } from './difficultyConfig';
@@ -162,4 +161,3 @@ export const generateGame = (difficulty: Difficulty): GameState => {
     decoyOperations,
   };
 };
-

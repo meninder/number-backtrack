@@ -17,4 +17,3 @@ export interface GameState {
   inverseOperations: Step[];
   decoyOperations: Step[]; // Decoy operations
 }
-

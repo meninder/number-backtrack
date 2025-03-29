@@ -53,4 +53,3 @@ export const isCorrectReverseStep = (
 export const isStepCompleted = (stepIndex: number, completedSteps: number[]): boolean => {
   return completedSteps.includes(stepIndex);
 };
-
