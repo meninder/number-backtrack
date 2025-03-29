@@ -31,25 +31,25 @@ const OperationTile: React.FC<OperationTileProps> = ({
         return { 
           symbol: '+', 
           bg: 'bg-operation-add/90',
-          text: 'text-white'
+          text: 'text-black'
         };
       case 'subtract':
         return { 
           symbol: '-', 
           bg: 'bg-operation-subtract/90',
-          text: 'text-white'
+          text: 'text-black'
         };
       case 'multiply':
         return { 
           symbol: '×', 
           bg: 'bg-operation-multiply/90',
-          text: 'text-primary-foreground'
+          text: 'text-black'
         };
       case 'divide':
         return { 
           symbol: '÷', 
           bg: 'bg-operation-divide/90',
-          text: 'text-primary-foreground'
+          text: 'text-black'
         };
       default:
         return { 
