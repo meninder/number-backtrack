@@ -63,7 +63,7 @@ const GamePath: React.FC<GamePathProps> = ({
               isRevealed={intermediateValues[index] !== null}
               isResult={false}
               animate={intermediateValues[index] !== null && index !== 0}
-              editable={manualCalculation && intermediateValues[index] === '' && completedSteps.includes(index-1)}
+              editable={manualCalculation && intermediateValues[index] === '' && completedSteps.includes(index)}
               onChange={(newValue) => handleUserInputChange(index, newValue)}
               onBlur={() => validateUserCalculation(index)}
             />

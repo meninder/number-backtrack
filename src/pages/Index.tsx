@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import GameHeader from '@/components/GameHeader';
 import GameBoard from '@/components/GameBoard';
@@ -82,12 +81,6 @@ const Index = () => {
           hintRequested={showHint}
           onHintUsed={handleHintUsed}
         />
-      </div>
-      
-      <div className="mt-8 text-center">
-        <p className="text-sm text-muted-foreground">
-          Work backwards to find the starting number.
-        </p>
       </div>
     </div>
   );
