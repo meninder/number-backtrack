@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { ArrowUp } from 'lucide-react';
 import { cn } from "@/lib/utils";
 
 interface DropZoneProps {
@@ -78,7 +77,7 @@ const DropZone: React.FC<DropZoneProps> = ({
   return (
     <div
       className={cn(
-        "drop-zone flex items-center justify-center rounded-xl p-2 min-w-24 min-h-14 border-2 border-dashed",
+        "drop-zone flex items-center justify-center rounded-xl p-2 w-24 h-14 border-2 border-dashed",
         isActive 
           ? "border-primary/70 bg-primary/5" 
           : "border-gray-200 bg-gray-50",

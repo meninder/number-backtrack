@@ -22,48 +22,43 @@ const GamePath: React.FC<GamePathProps> = ({
   validateUserCalculation,
 }) => {
   return (
-    <div className="flex flex-col w-full max-w-3xl mx-auto mb-2">
-      {/* Top row with number boxes and forward arrows */}
-      <div className="flex flex-wrap justify-center items-center gap-3 mb-4">
-        {intermediateValues.map((value, index) => (
-          <React.Fragment key={index}>
+    <div className="flex flex-col w-full max-w-3xl mx-auto mb-8">
+      {/* Top row with number boxes and operation displays between them */}
+      <div className="flex justify-center items-center gap-4 mb-8">
+        {game.steps.map((step, index) => (
+          <React.Fragment key={`step-${index}`}>
+            {/* Number box (starting value or intermediate value) */}
             <NumberBox 
-              value={value ?? '?'} 
-              isRevealed={value !== null}
-              isResult={index === intermediateValues.length - 1}
-              animate={index !== intermediateValues.length - 1}
-              editable={manualCalculation && value === '' && completedSteps.includes(index)}
+              value={index === 0 ? (intermediateValues[0] ?? '?') : (intermediateValues[index] ?? '?')}
+              isRevealed={intermediateValues[index] !== null}
+              isResult={false}
+              animate={intermediateValues[index] !== null && index !== 0}
+              editable={manualCalculation && intermediateValues[index] === '' && completedSteps.includes(index-1)}
               onChange={(newValue) => handleUserInputChange(index, newValue)}
               onBlur={() => validateUserCalculation(index)}
             />
             
+            {/* Operation display between boxes, don't show after the last intermediate value */}
             {index < game.steps.length && (
-              <OperationArrow 
-                operation={game.steps[index].operation}
-                value={game.steps[index].value}
-                direction="right"
-              />
+              <div className="operation-display flex items-center justify-center w-24 h-14 border-2 border-gray-200 rounded-lg bg-white">
+                <span className="text-xl font-bold">
+                  {step.operation === 'add' && `+${step.value}`}
+                  {step.operation === 'subtract' && `-${step.value}`}
+                  {step.operation === 'multiply' && `×${step.value}`}
+                  {step.operation === 'divide' && `÷${step.value}`}
+                </span>
+              </div>
             )}
           </React.Fragment>
         ))}
-      </div>
-      
-      {/* Vertical connecting arrows */}
-      <div className="flex justify-center mb-2">
-        {intermediateValues.map((_, index) => (
-          <React.Fragment key={`connector-${index}`}>
-            <div className="flex-1 flex justify-center">
-              <OperationArrow
-                operation=""
-                value={0}
-                direction="down"
-              />
-            </div>
-            {index < intermediateValues.length - 1 && (
-              <div className="w-[78px]"></div> // Space for the horizontal arrows
-            )}
-          </React.Fragment>
-        ))}
+        
+        {/* Final result box */}
+        <NumberBox 
+          value={intermediateValues[intermediateValues.length - 1] ?? '?'}
+          isRevealed={intermediateValues[intermediateValues.length - 1] !== null}
+          isResult={true}
+          animate={false}
+        />
       </div>
     </div>
   );

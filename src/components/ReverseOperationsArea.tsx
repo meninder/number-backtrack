@@ -1,7 +1,6 @@
 
 import React from 'react';
 import DropZone from './DropZone';
-import OperationArrow from './OperationArrow';
 import { GameState } from '@/utils/gameLogic';
 
 interface ReverseOperationsAreaProps {
@@ -20,10 +19,13 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
   onDrop 
 }) => {
   return (
-    <div className="flex flex-wrap justify-center items-center gap-3 mb-8">
-      {game.steps.map((_, index) => (
+    <div className="flex justify-center items-center gap-4 mb-8">
+      {game.steps.map((step, index) => (
         <React.Fragment key={`reverse-${index}`}>
-          {/* Drop zone for the backward operation */}
+          {/* Empty space to align with number boxes */}
+          <div className="w-24 h-24 opacity-0"></div>
+          
+          {/* Drop zone for the reverse operation (aligned with the operation display above) */}
           <DropZone 
             stepIndex={index}
             isActive={activeDropZone === index}
@@ -38,17 +40,11 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
             isHighlighted={activeDropZone === index && currentDragTile !== null}
             onDrop={onDrop}
           />
-          
-          {/* Arrow pointing up */}
-          {index < game.steps.length - 1 && (
-            <OperationArrow 
-              operation=""
-              value={0}
-              direction="up"
-            />
-          )}
         </React.Fragment>
       ))}
+      
+      {/* Empty space to align with final result box */}
+      <div className="w-24 h-24 opacity-0"></div>
     </div>
   );
 };
