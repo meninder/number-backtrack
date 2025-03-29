@@ -2,6 +2,7 @@
 import React from 'react';
 import NumberBox from './NumberBox';
 import { GameState } from '@/utils/gameLogic';
+import { ArrowRight } from 'lucide-react';
 
 interface GamePathProps {
   game: GameState;
@@ -43,6 +44,13 @@ const GamePath: React.FC<GamePathProps> = ({
         
         {/* Empty space at the end */}
         <div className="w-24 h-14 opacity-0"></div>
+      </div>
+      
+      {/* Forward arrow */}
+      <div className="relative flex justify-center mb-2">
+        <div className="w-[90%] h-px bg-black relative">
+          <ArrowRight className="absolute right-0 top-1/2 -translate-y-1/2 text-black" size={20} />
+        </div>
       </div>
       
       {/* Number boxes (middle row) */}
