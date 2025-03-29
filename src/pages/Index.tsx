@@ -86,7 +86,7 @@ const Index = () => {
       
       <div className="mt-8 text-center">
         <p className="text-sm text-muted-foreground">
-          Solve the puzzle by working backwards! Drag the correct operations to find the starting number.
+          Work backwards to find the starting number.
         </p>
       </div>
     </div>

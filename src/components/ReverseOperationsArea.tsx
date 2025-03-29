@@ -26,7 +26,7 @@ const ReverseOperationsArea: React.FC<ReverseOperationsAreaProps> = ({
           {index > 0 && (
             <div className="mx-2">
               <OperationArrow 
-                operation="add" 
+                operation="backwards" 
                 value={0} 
               />
             </div>

@@ -91,11 +91,6 @@ const NumberBox: React.FC<NumberBoxProps> = ({
           Final Result
         </span>
       )}
-      {!isRevealed && !isResult && (
-        <span className="absolute -top-7 left-0 right-0 text-center text-sm font-semibold text-muted-foreground">
-          Starting Number
-        </span>
-      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
 
 interface OperationArrowProps {
   operation: string;
@@ -9,6 +9,7 @@ interface OperationArrowProps {
 
 const OperationArrow: React.FC<OperationArrowProps> = ({ operation, value }) => {
   let displayText = '';
+  let isBackwards = false;
   
   switch (operation) {
     case 'add':
@@ -23,6 +24,10 @@ const OperationArrow: React.FC<OperationArrowProps> = ({ operation, value }) => 
     case 'divide':
       displayText = `÷ ${value}`;
       break;
+    case 'backwards':
+      isBackwards = true;
+      displayText = '';
+      break;
     default:
       displayText = '';
   }
@@ -32,7 +37,11 @@ const OperationArrow: React.FC<OperationArrowProps> = ({ operation, value }) => 
       <div className="text-sm font-semibold mb-1 text-muted-foreground">
         {displayText}
       </div>
-      <ArrowRight size={28} className="text-primary" />
+      {isBackwards ? (
+        <ArrowLeft size={28} className="text-primary" />
+      ) : (
+        <ArrowRight size={28} className="text-primary" />
+      )}
     </div>
   );
 };
